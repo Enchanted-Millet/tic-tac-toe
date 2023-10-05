@@ -3,10 +3,16 @@ import XSymbol from '../assets/x-symbol.svg';
 import OSymbol from '../assets/circle-symbol.svg';
 import style from './style.module.css';
 
-export default function Board({ board, handleClick }) {
+export default function Board({
+  board,
+  handleClick
+}: {
+  board: Board;
+  handleClick: (position: Position) => void;
+}) {
   return (
     <div className={style.board}>
-      {board.map((row, i) => (
+      {board.map((row: BoardRow, i) => (
         <div key={i} className={style.row}>
           {row.map((cell, j) => (
             <span

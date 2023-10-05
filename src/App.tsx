@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, KeyboardEvent } from 'react';
 import Board from './components/Board';
 import { checkWinner } from './utils';
 
@@ -6,7 +6,7 @@ import './App.css';
 
 function App() {
   const [size, setSize] = useState(3);
-  const [board, setBoard] = useState(null);
+  const [board, setBoard] = useState<Board>([[]]);
   const [currentPlayer, setCurrentPlayer] = useState(0); // 1 or 0
   const [move, setMove] = useState(0);
 
@@ -30,17 +30,18 @@ function App() {
     }
   }, [board]);
 
-  const handleInput = e => {
+  const handleInput = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      if (e.target.value < 3) {
+      const target = e.target as HTMLInputElement;
+      if (+target.value < 3) {
         alert('Board size must be at least 3');
         return;
       }
-      setSize(+e.target.value);
+      setSize(+target.value);
     }
   };
 
-  const handleClick = ([x, y]) => {
+  const handleClick = ([x, y]: Position) => {
     if (board[x][y] !== -1) return;
     setBoard(prevBoard => {
       const newBoard = [...prevBoard];
@@ -61,7 +62,7 @@ function App() {
           defaultValue={3}
         />
       </div>
-      {board && <Board board={board} handleClick={handleClick} />}
+      <Board board={board} handleClick={handleClick} />
     </>
   );
 }

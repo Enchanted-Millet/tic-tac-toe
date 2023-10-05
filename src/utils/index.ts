@@ -1,10 +1,14 @@
-export function checkWinner(board, move) {
+export function checkWinner(
+  board: Board,
+  move: number
+): 'win' | 'draw' | undefined {
   if (!board) return;
 
   const size = board.length;
 
-  const checkRow = row => row.every(cell => cell === row[0] && cell !== -1);
-  const transpose = matrix =>
+  const checkRow = (row: BoardRow) =>
+    row.every(cell => cell === row[0] && cell !== -1);
+  const transpose = (matrix: Board) =>
     matrix[0].map((_, i) => matrix.map(row => row[i]));
 
   // check diagonals
