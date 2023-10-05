@@ -1,15 +1,13 @@
-import PropTypes from 'prop-types';
 import XSymbol from '../assets/x-symbol.svg';
 import OSymbol from '../assets/circle-symbol.svg';
 import style from './style.module.css';
 
-export default function Board({
-  board,
-  handleClick
-}: {
+interface BoardProps {
   board: Board;
   handleClick: (position: Position) => void;
-}) {
+}
+
+export default function Board({ board, handleClick }: BoardProps) {
   return (
     <div className={style.board}>
       {board.map((row: BoardRow, i) => (
@@ -34,8 +32,3 @@ export default function Board({
     </div>
   );
 }
-
-Board.propTypes = {
-  board: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
-  handleClick: PropTypes.func.isRequired
-};
