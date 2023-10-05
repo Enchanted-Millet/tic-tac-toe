@@ -1,8 +1,5 @@
-export function checkWinner(
-  board: Board,
-  move: number
-): 'win' | 'draw' | undefined {
-  if (!board) return;
+export function checkWinner(board: Board, move: number): 'win' | 'draw' | '' {
+  if (!board || board[0].length === 0) return '';
 
   const size = board.length;
 
@@ -30,4 +27,6 @@ export function checkWinner(
   if (move >= size * size) {
     return 'draw';
   }
+
+  return '';
 }

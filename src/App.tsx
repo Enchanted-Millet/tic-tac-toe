@@ -9,26 +9,32 @@ function App() {
   const [board, setBoard] = useState<Board>([[]]);
   const [currentPlayer, setCurrentPlayer] = useState(0); // 1 or 0
   const [move, setMove] = useState(0);
+  const [status, setStatus] = useState(''); // win or draw
 
   useEffect(() => {
     setBoard(new Array(size).fill(null).map(() => new Array(size).fill(-1)));
   }, [size]);
 
   useEffect(() => {
-    const win = checkWinner(board, move);
-    if (win) {
+    setStatus(checkWinner(board, move));
+    setCurrentPlayer(move % 2);
+  }, [board, move]);
+
+  useEffect(() => {
+    if (status) {
       setTimeout(() => {
-        alert(win === 'win' ? `Player ${currentPlayer} wins!` : 'Draw!');
+        alert(
+          status === 'win' ? `Player ${Number(!currentPlayer)} wins!` : 'Draw!'
+        );
         setBoard(
           new Array(size).fill(null).map(() => new Array(size).fill(-1))
         );
         setCurrentPlayer(0);
         setMove(0);
+        setStatus('');
       }, 10);
-    } else {
-      setCurrentPlayer(Number(!currentPlayer));
     }
-  }, [board]);
+  }, [status]);
 
   const handleInput = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
@@ -54,6 +60,7 @@ function App() {
   return (
     <>
       <h1>Tic Tac Toe</h1>
+      <h2>Your turn, Player {move % 2}</h2>
       <div>
         <input
           type="number"
