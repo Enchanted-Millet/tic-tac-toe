@@ -1,6 +1,7 @@
 import { useEffect, useState, KeyboardEvent } from 'react';
 import Board from './components/Board';
 import { checkWinner } from './utils';
+import { Status } from './types';
 
 import './App.css';
 
@@ -9,10 +10,13 @@ function App() {
   const [board, setBoard] = useState<Board>([[]]);
   const [currentPlayer, setCurrentPlayer] = useState(0); // 1 or 0
   const [move, setMove] = useState(0);
-  const [status, setStatus] = useState(''); // win or draw
+  const [status, setStatus] = useState<Status>(Status.Continue); // win or draw
 
   useEffect(() => {
     setBoard(new Array(size).fill(null).map(() => new Array(size).fill(-1)));
+    setMove(0);
+    setStatus(Status.Continue);
+    setCurrentPlayer(0);
   }, [size]);
 
   useEffect(() => {
@@ -24,14 +28,16 @@ function App() {
     if (status) {
       setTimeout(() => {
         alert(
-          status === 'win' ? `Player ${Number(!currentPlayer)} wins!` : 'Draw!'
+          status === Status.Win
+            ? `Player ${Number(!currentPlayer)} wins!`
+            : 'Draw!'
         );
         setBoard(
           new Array(size).fill(null).map(() => new Array(size).fill(-1))
         );
         setCurrentPlayer(0);
         setMove(0);
-        setStatus('');
+        setStatus(Status.Continue);
       }, 10);
     }
   }, [status]);

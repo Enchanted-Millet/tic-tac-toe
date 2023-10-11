@@ -1,5 +1,7 @@
-export function checkWinner(board: Board, move: number): 'win' | 'draw' | '' {
-  if (!board || board[0].length === 0) return '';
+import { Status } from '../types';
+
+export function checkWinner(board: Board, move: number): Status {
+  if (!board || board[0].length === 0) return Status.Continue;
 
   const size = board.length;
 
@@ -22,11 +24,11 @@ export function checkWinner(board: Board, move: number): 'win' | 'draw' | '' {
     checkRow(diagonal1) ||
     checkRow(diagonal2)
   ) {
-    return 'win';
+    return Status.Win;
   }
   if (move >= size * size) {
-    return 'draw';
+    return Status.Draw;
   }
 
-  return '';
+  return Status.Continue;
 }
