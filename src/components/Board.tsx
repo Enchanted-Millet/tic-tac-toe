@@ -1,6 +1,5 @@
 import XSymbol from '../assets/x-symbol.svg';
 import OSymbol from '../assets/circle-symbol.svg';
-import style from './style.module.css';
 
 interface BoardProps {
   board: Board;
@@ -9,19 +8,19 @@ interface BoardProps {
 
 export default function Board({ board, handleClick }: BoardProps) {
   return (
-    <div className={style.board}>
+    <div className="flex flex-col w-[500px] h-[500px]">
       {board.map((row: BoardRow, i) => (
-        <div key={i} className={style.row}>
+        <div key={i} className="flex flex-1">
           {row.map((cell, j) => (
             <span
               key={j}
-              className={style.cell}
+              className="flex flex-1 justify-center items-center border-2 border-sky-800 cursor-pointer"
               onClick={() => handleClick([i, j])}
             >
               {cell === 1 ? (
-                <img src={XSymbol} alt="X Symbol" className={style.symbol} />
+                <img src={XSymbol} alt="X Symbol" className="w-3/4" />
               ) : cell === 0 ? (
-                <img src={OSymbol} alt="O Symbol" className={style.symbol} />
+                <img src={OSymbol} alt="O Symbol" className="w-4/5" />
               ) : (
                 ''
               )}

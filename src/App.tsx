@@ -3,8 +3,6 @@ import Board from './components/Board';
 import { checkWinner } from './utils';
 import { Status } from './types';
 
-import './App.css';
-
 function App() {
   const [size, setSize] = useState(3);
   const [board, setBoard] = useState<Board>([[]]);
@@ -64,19 +62,20 @@ function App() {
   };
 
   return (
-    <>
-      <h1>Tic Tac Toe</h1>
-      <h2>Your turn, Player {move % 2}</h2>
-      <div>
+    <div className="flex flex-col items-center m-20">
+      <h1 className="text-5xl">Tic Tac Toe</h1>
+      <div className="my-4">
         <input
           type="number"
           placeholder="Board size"
           onKeyDown={handleInput}
           defaultValue={3}
+          className="border-0 rounded-md py-1.5 px-2 text-gray-100 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-400"
         />
       </div>
       <Board board={board} handleClick={handleClick} />
-    </>
+      <h2 className="text-2xl mt-4 italic">Your turn, Player {move % 2}</h2>
+    </div>
   );
 }
 
